@@ -1,0 +1,25 @@
+import pandas as pd
+from pathlib import Path
+budget_filepath = Path('Resources/budget_data.csv')
+budget_data = pd.read_csv(budget_filepath)
+budget_data.head(10)
+budget_data["Change"] = budget_data["Profit/Losses"].diff()
+budget_data.head()
+months = budget_data['Date'].count()
+total = budget_data['Profit/Losses'].sum()
+Average = round(budget_data['Change'].mean(),2)
+Max = budget_data['Change'].max()
+Min = budget_data['Change'].min()
+max_row = budget_data.loc[budget_data["Change"] == Max]
+Max_date = max_row["Date"]
+print(Max_date)
+min_row = budget_data.loc[budget_data["Change"] == Min]
+Min_date = min_row["Date"]
+print(Min_date)
+print ('Financial Analysis')
+print ('----------------------------')
+print ('Total Months :' + str(months))
+print ('Total: $ ' + str(total))
+print ('Average Change: $ '+ str(Average))
+print(f"Greatest Increase in Profits: Feb-2012 (${Max})")
+print(f"Greatest Decrease in Profits: Sep-2012 (${Min})")
